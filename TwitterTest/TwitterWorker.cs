@@ -52,14 +52,14 @@ namespace TwitterTest
             var user = User.GetAuthenticatedUser();
             if (user == null)
                 throw new Exception("Not Autorized!");
-            string chunk;
-            while (message.Length != 0)
-            {
-                var count = Math.Min(message.Length, 140);
-                chunk = message.Substring(0, count);
-                message = message.Remove(0, count);
-                Tweet.PublishTweet(chunk);
-            }
+            List<string> chunks = new List<string>();
+            for (var i = 0; i < message.Length / 140; ++i)
+                chunks.Add(message.Substring(i * 140, 140));
+            if (message.Length % 140 != 0)
+                chunks.Add(message.Substring(message.Length - message.Length % 140));
+            chunks.Reverse();
+            foreach (var i in chunks)
+                Tweet.PublishTweet(i);
         }
 
         public string Get5Message(string userName)
@@ -83,18 +83,23 @@ namespace TwitterTest
             return messagesText;
         }
 
-        static public Dictionary<char, uint> lettersCount(string input)
+        static public Dictionary<char, double> lettersCount(string input)
         {
-            Dictionary<char, uint> map = new Dictionary<char, uint>();
+            var map = new Dictionary<char, double>();
+            var lettersCount = 0;
             foreach (var i in input) //I think this faster then LINQ
             {
                 if (char.IsLetter(i))
+                {
+                    ++lettersCount;
                     if (map.ContainsKey(i))
                         map[i]++;
                     else
                         map.Add(i, 1);
+                }
             }
-            return map.OrderBy(i =>i.Key).ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
+            return map.OrderBy(i =>i.Key).ToDictionary((keyItem) => keyItem.Key,
+                (valueItem) => Math.Round(valueItem.Value / lettersCount, 3));
         }
 
     }

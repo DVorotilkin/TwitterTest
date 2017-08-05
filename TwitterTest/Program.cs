@@ -39,6 +39,7 @@ namespace TwitterTest
                         TwitterWorker.lettersCount(
                             twitterWorker.Get5Message(currentUserName)));
                     Console.WriteLine(jsonMap);
+                    Console.WriteLine("Tweeting...");
                     var message = $"{currentUserName}, статистика для последних 5 твитов:{jsonMap.ToString()}";
                     twitterWorker.Post(message);
                 }
