@@ -17,7 +17,7 @@ namespace TwitterTestTester
             Assert.AreEqual(testStr.Length / 2, result.Count, "In map length");
             foreach (var i in result)
             {
-                Assert.AreEqual(i.Value, (UInt32)2, $"In count of {i.Key}");
+                Assert.AreEqual(i.Value, 2f/testStr.Length, $"In count of {i.Key}");
             }
         }
     }

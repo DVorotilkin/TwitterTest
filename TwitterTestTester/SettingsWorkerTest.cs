@@ -59,5 +59,26 @@ namespace TwitterTestTester
                 Assert.Fail(e.Message);
             }
         }
+
+        [TestMethod]
+        public void LoadSettingsFileNitExist()
+        {
+            string fileName = "NotExistFileName";
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+            SettingsWorker settingsWorker = new SettingsWorker(fileName);
+            try
+            {
+                settingsWorker.LoadSettings();
+                Assert.AreEqual(consumerKey, settingsWorker.settings.consumerKey);
+                Assert.AreEqual(consumerSecret, settingsWorker.settings.consumerSecret);
+                Assert.AreEqual("", settingsWorker.settings.userAccessToken);
+                Assert.AreEqual("", settingsWorker.settings.userAccessSecret);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
     }
 }

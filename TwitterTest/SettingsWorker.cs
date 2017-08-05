@@ -48,12 +48,20 @@ namespace TwitterTest
 
         public void LoadSettings()
         {
-
-            using (System.IO.Stream reader = new FileStream(settingsFileName, FileMode.Open))
+            try
             {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Settings));
-                settings = (Settings)ser.ReadObject(reader);
+                using (System.IO.Stream reader = new FileStream(settingsFileName, FileMode.Open))
+                {
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Settings));
+                    settings = (Settings)ser.ReadObject(reader);
+                }
             }
+            catch(FileNotFoundException e)
+            {
+                settings = new Settings("GsN18wtO5x3S6TMr7spFz4qMc",
+                    "43HHAMGtitcMKvWxK7CJ8eyVpEpiK9zUbyU4KSf4da1aFSRxTG", "", "");
+            }
+            
         }
     }
 
