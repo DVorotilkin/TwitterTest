@@ -9,7 +9,7 @@ namespace TwitterTestTester
     [TestClass]
     public class SettingsWorkerTester
     {
-        const string settingsFileName = "TestSettings.ini";
+        string settingsFileName = "..//..//TestSettings.ini";
         const string consumerKey = "GsN18wtO5x3S6TMr7spFz4qMc";
         const string consumerSecret = "43HHAMGtitcMKvWxK7CJ8eyVpEpiK9zUbyU4KSf4da1aFSRxTG";
         const string userAccessToken = "892343342083780609-06JWHPF7d680xo64iGukHlVkeaGeaGE";
@@ -61,7 +61,7 @@ namespace TwitterTestTester
         }
 
         [TestMethod]
-        public void LoadSettingsFileNitExist()
+        public void LoadSettingsFileNotExist()
         {
             string fileName = "NotExistFileName";
             if (File.Exists(fileName))
