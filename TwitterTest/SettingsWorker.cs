@@ -26,7 +26,7 @@ namespace TwitterTest
         }
     }
 
-    class SettingsWorker
+    public class SettingsWorker
     {
         public Settings settings { get; set; }
 

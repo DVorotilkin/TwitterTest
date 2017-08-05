@@ -9,7 +9,7 @@ using Tweetinvi.Parameters;
 
 namespace TwitterTest
 {
-    class TwitterWorker
+    public class TwitterWorker
     {
         public void Autorize()
         {
@@ -55,8 +55,9 @@ namespace TwitterTest
             string chunk;
             while (message.Length != 0)
             {
-                chunk = message.Substring(0, 140);
-                message = message.Remove(0, 140);
+                var count = Math.Min(message.Length, 140);
+                chunk = message.Substring(0, count);
+                message = message.Remove(0, count);
                 Tweet.PublishTweet(chunk);
             }
         }
@@ -82,10 +83,10 @@ namespace TwitterTest
             return messagesText;
         }
 
-        public Dictionary<char, uint> lettersCount(string input)
+        static public Dictionary<char, uint> lettersCount(string input)
         {
             Dictionary<char, uint> map = new Dictionary<char, uint>();
-            foreach (var i in input)
+            foreach (var i in input) //I think this faster then LINQ
             {
                 if (char.IsLetter(i))
                     if (map.ContainsKey(i))
